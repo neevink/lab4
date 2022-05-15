@@ -224,15 +224,14 @@ class CubicApproximation(BaseApproximation):
     def get_name(self):
         return 'Полиномиальная аппроксимация третьей степени'
 
-    def get_approximation(self, points: list) -> Function:
-        n = len(points)
-        SX = np.array([x for x, _ in points])
-        SY = np.array([y for _, y in points])
+    def get_approximation(self, function_table: dict) -> Function:
+        n = len(function_table)
+        SX = np.array([x for x, _ in function_table.items()])
+        SY = np.array([y for _, y in function_table.items()])
         a, b, c, d = np.polyfit(SX, SY, 3)
         function = lambda x: a * x ** 3 + b * x ** 2 + c * x + d
-        s = sum((function(x) - y) ** 2 for x, y in points)
+        s = sum((function(x) - y) ** 2 for x, y in function_table.items())
         root_mean_square_deviation = sqrt(s / n)
-        f = Function(function, f'ф = {round(a, 3):+}*x^3 {round(b, 3):+}*x^2 {round(c, 3):+}*x+{round(d, 3)}', s,
-        root_mean_square_deviation)
-        self.display(points, f, self.get_name())
+        f = Function(function, f'ф = {round(a, 3):+}*x^3 {round(b, 3):+}*x^2 {round(c, 3):+}*x+{round(d, 3)}', s, root_mean_square_deviation)
+        # self.display(points, f, self.get_name())
         return f

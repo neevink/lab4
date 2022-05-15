@@ -26,7 +26,7 @@ METHODS = [
     ExponentialApproximation(),
     LogApproximation(),
     PowApproximation(),
-    # CubicApproximation(),
+    CubicApproximation(),
 ]
 
 
